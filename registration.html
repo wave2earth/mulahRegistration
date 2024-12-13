@@ -46,4 +46,25 @@
         <p class="powered-by">Powered by MulahRewards.com</p>
     </div>
 </body>
+<script>
+    document.querySelector('form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        // Get the input values
+        const name = document.getElementById('name').value;
+        const day = document.querySelector('input[name="day"]').value;
+        const month = document.querySelector('input[name="month"]').value;
+        const year = document.querySelector('input[name="year"]').value;
+        const email = document.getElementById('email').value;
+        const noEmail = document.getElementById('no-email').checked;
+
+        // Store the data in sessionStorage
+        sessionStorage.setItem('name', name);
+        sessionStorage.setItem('birthday', `${day}/${month}/${year}`);
+        sessionStorage.setItem('email', noEmail ? 'No email provided' : email);
+
+        // Redirect to confirmation page
+        window.location.href = 'confirmation.html';
+    });
+</script>
 </html>

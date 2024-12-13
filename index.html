@@ -21,4 +21,18 @@
         <p class="powered-by">Powered by MulahRewards.com</p>
     </div>
 </body>
+<script>
+    document.querySelector('.check-button').addEventListener('click', function() {
+        const mobileInput = document.querySelector('input[type="tel"]').value;
+        const validNumber = "+60173527250";
+
+        // Check if the input is a valid number
+        if (mobileInput === validNumber) {
+            // Redirect to registration page
+            window.location.href = 'registration.html';
+        } else {
+            alert('Please enter a valid mobile number: ' + validNumber);
+        }
+    });
+</script>
 </html>

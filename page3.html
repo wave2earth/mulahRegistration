@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmation</title>
+    <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+    <div class="container">
+        <h1>Confirmation</h1>
+        <h2>Your Details</h2>
+        <p id="confirmation-message"></p>
+        <p class="powered-by">Powered by MulahRewards.com</p>
+    </div>
+
+    <script>
+        // Retrieve the data from localStorage
+        const name = localStorage.getItem('name');
+        const birthday = localStorage.getItem('birthday');
+        const email = localStorage.getItem('email');
+
+        // Display the data
+        document.getElementById('confirmation-message').innerHTML = `
+            <strong>Name:</strong> ${name}<br>
+            <strong>Birthday:</strong> ${birthday}<br>
+            <strong>Email:</strong> ${email}
+        `;
+    </script>
+</body>
+<script>
+    // Retrieve the data from sessionStorage
+    const name = sessionStorage.getItem('name');
+    const birthday = sessionStorage.getItem('birthday');
+    const email = sessionStorage.getItem('email');
+
+    // Display the data
+    document.getElementById('confirmation-message').innerHTML = `
+        <strong>Name:</strong> ${name}<br>
+        <strong>Birthday:</strong> ${birthday}<br>
+        <strong>Email:</strong> ${email}
+    `;
+</script>
+</html>
