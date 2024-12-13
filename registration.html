@@ -1,136 +1,75 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mulah Registration</title>
-    <link rel="stylesheet" href="style.css"> 
-</head>
-<body>
-    <div class="container">
-        <h1>MULAH</h1>
-        <h2>Registration</h2>
-        <p>Please fill up your details.</p>
+<script>
+    // Event listener for form submission
+    document.getElementById("registration-form").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent the default form submission
+        
+        // Get form values
+        let name = document.getElementById("name").value;
+        let day = document.getElementById("day").value;
+        let month = document.getElementById("month").value;
+        let year = document.getElementById("year").value;
+        let email = document.getElementById("email").value;
+        let noEmail = document.getElementById("no-email").checked;
 
-        <form id="registration-form" method="post">
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" id="name" name="name" placeholder="Enter Name" required>
-                <span class="error" id="name-error">*Please insert a name.</span>
-            </div>
+        // Initialize an array to hold error messages
+        let errorMessages = [];
 
-            <div class="form-group">
-                <label for="birthday">Birthday</label>
-                <div class="birthday-fields">
-                    <input type="text" id="day" name="day" placeholder="DD" required>
-                    <input type="text" id="month" name="month" placeholder="MM" required>
-                    <input type="text" id="year" name="year" placeholder="YYYY" required>
-                </div>
-                <span class="error" id="birthday-error">*Please insert your birthday.</span>
-            </div>
-
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="Email Address" required>
-                <span class="error" id="email-error">*Please insert a valid email address.</span>
-            </div>
-
-            <div class="form-group">
-                <input type="checkbox" id="no-email" name="no-email">
-                <label for="no-email">No email address</label>
-            </div>
-
-            <button type="submit" class="continue-button">Continue</button>
-        </form>
-
-        <p class="powered-by">Powered by MulahRewards.com</p>
-    </div>
-
-    <script>
-        // Event listener for form submission
-        document.getElementById("registration-form").addEventListener("submit", function(event) {
-            event.preventDefault(); // Prevent the default form submission
-            
-            // Get form values
-            let name = document.getElementById("name").value;
-            let day = document.getElementById("day").value;
-            let month = document.getElementById("month").value;
-            let year = document.getElementById("year").value;
-            let email = document.getElementById("email").value;
-            let noEmail = document.getElementById("no-email").checked;
-            
-            // Error messages
-            let nameError = document.getElementById("name-error");
-            let birthdayError = document.getElementById("birthday-error");
-            let emailError = document.getElementById("email-error");
-    
-            // Reset error messages
-            nameError.style.display = "none";
-            birthdayError.style.display = "none";
-            emailError.style.display = "none";
-    
-            // Validate Name
-            if (!name.trim()) {
-                nameError.style.display = "inline";
-                return; // Stop execution if there's an error
-            }
-    
-            // Validate Birthday (DD, MM, YYYY format)
-            if (!isValidBirthday(day, month, year)) {
-                birthdayError.style.display = "inline";
-                return; // Stop execution if there's an error
-            }
-    
-            // Validate Email (if no-email checkbox is not checked)
-            if (!noEmail && !validateEmail(email)) {
-                emailError.style.display = "inline";
-                return; // Stop execution if there's an error
-            }
-    
-            // Save data in sessionStorage to pass it to page3.html
-            sessionStorage.setItem("name", name);
-            sessionStorage.setItem("birthday", `${day}/${month}/${year}`);
-            sessionStorage.setItem("email", noEmail ? "No email provided" : email);
-    
-            // Redirect to page 3
-            window.location.href = "page3.html";
-        });
-    
-        // Function to validate email
-        function validateEmail(email) {
-            let emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-            return emailRegex.test(email);
+        // Validate Name
+        if (!name.trim()) {
+            errorMessages.push("*Please insert a name.");
         }
-    
-        // Function to validate birthday
-        function isValidBirthday(day, month, year) {
-            if (!day || !month || !year || isNaN(day) || isNaN(month) || isNaN(year)) {
-                return false; // Not a number
-            }
-            day = parseInt(day);
-            month = parseInt(month);
-            year = parseInt(year);
-            
-            if (day < 1 || day > 31 || month < 1 || month > 12 || year < 1900 || year > new Date().getFullYear()) {
-                return false; // Out of range
-            }
-    
-            // Check for valid days in month
-            const daysInMonth = [31, (isLeapYear(year) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-            return day <= daysInMonth[month - 1];
+
+        // Validate Birthday (DD, MM, YYYY format)
+        if (!isValidBirthday(day, month, year)) {
+            errorMessages.push("*Please insert a valid birthday.");
         }
-    
-        // Function to check if a year is a leap year
-        function isLeapYear(year) {
-            return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+
+        // Validate Email (if no-email checkbox is not checked)
+        if (!noEmail && !validateEmail(email)) {
+            errorMessages.push("*Please insert a valid email address.");
         }
-    
-        // Clear error messages on input
-        document.querySelectorAll("input").forEach(input => {
-            input.addEventListener("input", function() {
-                document.getElementById(`${input.id}-error`).style.display = "none";
-            });
-        });
-    </script>
-</body>
-</html>
+
+        // If there are errors, display them in an alert
+        if (errorMessages.length > 0) {
+            alert(errorMessages.join("\n")); // Show all error messages in a single alert
+            return; // Stop execution if there are errors
+        }
+
+        // Save data in sessionStorage to pass it to page3.html
+        sessionStorage.setItem("name", name);
+        sessionStorage.setItem("birthday", `${day}/${month}/${year}`);
+        sessionStorage.setItem("email", noEmail ? "No email provided" : email);
+
+        // Redirect to page 3
+        window.location.href = "page3.html";
+    });
+
+    // Function to validate email
+    function validateEmail(email) {
+        let emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        return emailRegex.test(email);
+    }
+
+    // Function to validate birthday
+    function isValidBirthday(day, month, year) {
+        if (!day || !month || !year || isNaN(day) || isNaN(month) || isNaN(year)) {
+            return false; // Not a number
+        }
+        day = parseInt(day);
+        month = parseInt(month);
+        year = parseInt(year);
+        
+        if (day < 1 || day > 31 || month < 1 || month > 12 || year < 1900 || year > new Date().getFullYear()) {
+            return false; // Out of range
+        }
+
+        // Check for valid days in month
+        const daysInMonth = [31, (isLeapYear(year) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        return day <= daysInMonth[month - 1];
+    }
+
+    // Function to check if a year is a leap year
+    function isLeapYear(year) {
+        return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+    }
+</script>
