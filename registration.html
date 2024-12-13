@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mulah Registration</title>
+    <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+    <div class="container">
+        <h1>MULAH</h1>
+        <h2>Registration</h2>
+        <p>Please fill up your details.</p>
+
+        <form action="/submit" method="post"> 
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter Name" required>
+                <span class="error">*Please insert a name.</span> 
+            </div>
+
+            <div class="form-group">
+                <label for="birthday">Birthday</label>
+                <div class="birthday-fields">
+                    <input type="text" id="birthday" name="day" placeholder="DD" required>
+                    <input type="text" id="birthday" name="month" placeholder="MM" required>
+                    <input type="text" id="birthday" name="year" placeholder="YYYY" required>
+                </div>
+                <span class="error">*Please insert your birthday.</span> 
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Email Address" required>
+                <span class="error">*Please insert a valid email address.</span> 
+            </div>
+
+            <div class="form-group">
+                <input type="checkbox" id="no-email" name="no-email">
+                <label for="no-email">No email address</label>
+            </div>
+
+            <button type="submit" class="continue-button">Continue</button>
+        </form>
+
+        <p class="powered-by">Powered by MulahRewards.com</p>
+    </div>
+</body>
+</html>
