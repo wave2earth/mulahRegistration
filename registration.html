@@ -16,7 +16,7 @@
             <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" id="name" name="name" placeholder="Enter Name" required>
-                <span class="error" id="name-error">*Please insert a name.</span>
+                <span class="error" id="name-error">*Please insert a valid name (letters only).</span>
             </div>
 
             <div class="form-group">
@@ -26,7 +26,7 @@
                     <input type="text" id="month" name="month" placeholder="MM" required>
                     <input type="text" id="year" name="year" placeholder="YYYY" required>
                 </div>
-                <span class="error" id="birthday-error">*Please insert your birthday.</span>
+                <span class="error" id="birthday-error">*Please insert a valid birthday (DD MM YYYY).</span>
             </div>
 
             <div class="form-group">
@@ -69,8 +69,8 @@
             birthdayError.style.display = "none";
             emailError.style.display = "none";
 
-            // Validate Name
-            if (!name.trim()) {
+            // Validate Name: Name should only contain letters (no numbers)
+            if (!name.trim() || !/^[a-zA-Z\s]+$/.test(name)) {
                 nameError.style.display = "inline";
                 return; // Stop execution if there's an error
             }
