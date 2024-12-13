@@ -27,7 +27,7 @@ body, html {
 h1 {
     color: #e86e1c; /* Orange color for the title */
     font-size: 2.5em;
-    margin-bottom: 0.5em;
+    margin-bottom: 2em;
 }
 
 h2 {
@@ -149,7 +149,7 @@ select {
 
 h2 {
     font-family: "Times New Roman", serif; /* Change font to Times New Roman */
-    font-size: 2.5em; /* Increase font size */
+    font-size: 5em; /* Increase font size */
     text-align: left; /* Align text to the left */
     margin-bottom: 0.5em; /* Adjust spacing as needed */
     color : darkslategray;
