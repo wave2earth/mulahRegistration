@@ -12,11 +12,11 @@
         <h2>Registration</h2>
         <p>Please fill up your details.</p>
 
-        <form id="registration-form" method="post"> 
+        <form id="registration-form" method="post">
             <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" id="name" name="name" placeholder="Enter Name" required>
-                <span class="error" id="name-error">*Please insert a name.</span> 
+                <span class="error" id="name-error">*Please insert a name.</span>
             </div>
 
             <div class="form-group">
@@ -26,13 +26,13 @@
                     <input type="text" id="month" name="month" placeholder="MM" required>
                     <input type="text" id="year" name="year" placeholder="YYYY" required>
                 </div>
-                <span class="error" id="birthday-error">*Please insert your birthday.</span> 
+                <span class="error" id="birthday-error">*Please insert your birthday.</span>
             </div>
 
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" placeholder="Email Address" required>
-                <span class="error" id="email-error">*Please insert a valid email address.</span> 
+                <span class="error" id="email-error">*Please insert a valid email address.</span>
             </div>
 
             <div class="form-group">
@@ -47,56 +47,61 @@
     </div>
 
     <script>
-        document.getElementById('registration-form').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent default form submission
+        // Event listener for form submission
+        document.getElementById("registration-form").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent the default form submission
+            
+            // Get form values
+            let name = document.getElementById("name").value;
+            let day = document.getElementById("day").value;
+            let month = document.getElementById("month").value;
+            let year = document.getElementById("year").value;
+            let email = document.getElementById("email").value;
+            let noEmail = document.getElementById("no-email").checked;
+            
+            // Error messages
+            let nameError = document.getElementById("name-error");
+            let birthdayError = document.getElementById("birthday-error");
+            let emailError = document.getElementById("email-error");
 
-            // Get input values
-            const name = document.getElementById('name').value;
-            const day = document.getElementById('day').value;
-            const month = document.getElementById('month').value;
-            const year = document.getElementById('year').value;
-            const email = document.getElementById('email').value;
-            const noEmail = document.getElementById('no-email').checked;
+            // Reset error messages
+            nameError.style.display = "none";
+            birthdayError.style.display = "none";
+            emailError.style.display = "none";
 
-            // Hide error messages initially
-            document.getElementById('name-error').style.display = 'none';
-            document.getElementById('birthday-error').style.display = 'none';
-            document.getElementById('email-error').style.display = 'none';
-
-            let valid = true;
-
-            // Validate name
-            if (!name) {
-                document.getElementById('name-error').style.display = 'block';
-                valid = false;
+            // Validate Name
+            if (!name.trim()) {
+                nameError.style.display = "inline";
+                return; // Stop execution if there's an error
             }
 
-            // Validate birthday (using a more robust date validation function)
-            const isValidDate = (d, m, y) => {
-                const datePattern = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d\d$/; // DD/MM/YYYY format
-                if (!datePattern.test(`${d}/${m}/${y}`)) return false;
-                const date = new Date(`${y}-${m}-${d}`);
-                return date && date.getDate() == d && date.getMonth() + 1 == m && date.getFullYear() == y;
-            };
-
-            if (!day || !month || !year || !isValidDate(day, month, year)) {
-                document.getElementById('birthday-error').style.display = 'block';
-                valid = false;
+            // Validate Birthday (DD, MM, YYYY format)
+            if (!day || !month || !year || isNaN(day) || isNaN(month) || isNaN(year) || 
+                day < 1 || day > 31 || month < 1 || month > 12 || year < 1900 || year > new Date().getFullYear()) {
+                birthdayError.style.display = "inline";
+                return; // Stop execution if there's an error
             }
 
-            // Validate email if "No email address" is not checked
-            if (!noEmail && (!email || !/\S+@\S+\.\S+/.test(email))) {
-                document.getElementById('email-error').style.display = 'block';
-                valid = false;
+            // Validate Email (if no-email checkbox is not checked)
+            if (!noEmail && !validateEmail(email)) {
+                emailError.style.display = "inline";
+                return; // Stop execution if there's an error
             }
 
-            // If all validations pass, proceed with form submission
-            if (valid) {
-                // Store data in sessionStorage or process the form as needed
-                // For now, just redirect to page3.html
-                window.location.href = 'page3.html'; 
-            }
+            // Save data in sessionStorage to pass it to page3.html
+            sessionStorage.setItem("name", name);
+            sessionStorage.setItem("birthday", `${day}/${month}/${year}`);
+            sessionStorage.setItem("email", noEmail ? "No email provided" : email);
+
+            // Redirect to page 3
+            window.location.href = "page3.html";
         });
+
+        // Function to validate email
+        function validateEmail(email) {
+            let emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+            return emailRegex.test(email);
+        }
     </script>
 </body>
 </html>
