@@ -16,7 +16,7 @@
             <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" id="name" name="name" placeholder="Enter Name" required>
-                <span class="error" id="name-error">*Please insert a valid name (letters only).</span>
+                <span class="error" id="name-error">*Please insert a name.</span>
             </div>
 
             <div class="form-group">
@@ -26,7 +26,7 @@
                     <input type="text" id="month" name="month" placeholder="MM" required>
                     <input type="text" id="year" name="year" placeholder="YYYY" required>
                 </div>
-                <span class="error" id="birthday-error">*Please insert a valid birthday (DD MM YYYY).</span>
+                <span class="error" id="birthday-error">*Please insert your birthday.</span>
             </div>
 
             <div class="form-group">
@@ -63,45 +63,74 @@
             let nameError = document.getElementById("name-error");
             let birthdayError = document.getElementById("birthday-error");
             let emailError = document.getElementById("email-error");
-
+    
             // Reset error messages
             nameError.style.display = "none";
             birthdayError.style.display = "none";
             emailError.style.display = "none";
-
-            // Validate Name: Name should only contain letters (no numbers)
-            if (!name.trim() || !/^[a-zA-Z\s]+$/.test(name)) {
+    
+            // Validate Name
+            if (!name.trim()) {
                 nameError.style.display = "inline";
                 return; // Stop execution if there's an error
             }
-
+    
             // Validate Birthday (DD, MM, YYYY format)
-            if (!day || !month || !year || isNaN(day) || isNaN(month) || isNaN(year) || 
-                day < 1 || day > 31 || month < 1 || month > 12 || year < 1900 || year > new Date().getFullYear()) {
+            if (!isValidBirthday(day, month, year)) {
                 birthdayError.style.display = "inline";
                 return; // Stop execution if there's an error
             }
-
+    
             // Validate Email (if no-email checkbox is not checked)
             if (!noEmail && !validateEmail(email)) {
                 emailError.style.display = "inline";
                 return; // Stop execution if there's an error
             }
-
+    
             // Save data in sessionStorage to pass it to page3.html
             sessionStorage.setItem("name", name);
             sessionStorage.setItem("birthday", `${day}/${month}/${year}`);
             sessionStorage.setItem("email", noEmail ? "No email provided" : email);
-
+    
             // Redirect to page 3
             window.location.href = "page3.html";
         });
-
+    
         // Function to validate email
         function validateEmail(email) {
             let emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
             return emailRegex.test(email);
         }
+    
+        // Function to validate birthday
+        function isValidBirthday(day, month, year) {
+            if (!day || !month || !year || isNaN(day) || isNaN(month) || isNaN(year)) {
+                return false; // Not a number
+            }
+            day = parseInt(day);
+            month = parseInt(month);
+            year = parseInt(year);
+            
+            if (day < 1 || day > 31 || month < 1 || month > 12 || year < 1900 || year > new Date().getFullYear()) {
+                return false; // Out of range
+            }
+    
+            // Check for valid days in month
+            const daysInMonth = [31, (isLeapYear(year) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+            return day <= daysInMonth[month - 1];
+        }
+    
+        // Function to check if a year is a leap year
+        function isLeapYear(year) {
+            return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+        }
+    
+        // Clear error messages on input
+        document.querySelectorAll("input").forEach(input => {
+            input.addEventListener("input", function() {
+                document.getElementById(`${input.id}-error`).style.display = "none";
+            });
+        });
     </script>
 </body>
 </html>
