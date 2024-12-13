@@ -127,16 +127,6 @@ button.continue-button:hover {
     }
 }
 
-body {
-    font-family: sans-serif; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #f5f5f5; 
-    margin: 0; 
-}
-
 .container {
     background-color: #fff;
     padding: 30px;
