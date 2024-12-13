@@ -47,24 +47,54 @@
     </div>
 </body>
 <script>
-    document.querySelector('form').addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent the default form submission
+   document.getElementById('registration-form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the default form submission
 
-        // Get the input values
-        const name = document.getElementById('name').value;
-        const day = document.querySelector('input[name="day"]').value;
-        const month = document.querySelector('input[name="month"]').value;
-        const year = document.querySelector('input[name="year"]').value;
-        const email = document.getElementById('email').value;
-        const noEmail = document.getElementById('no-email').checked;
+    // Get the input values
+    const name = document.getElementById('name').value;
+    const day = document.getElementById('day').value;
+    const month = document.getElementById('month').value;
+    const year = document.getElementById('year').value;
+    const email = document.getElementById('email').value;
+    const noEmail = document.getElementById('no-email').checked;
 
-        // Store the data in sessionStorage
-        sessionStorage.setItem('name', name);
-        sessionStorage.setItem('birthday', `${day}/${month}/${year}`);
-        sessionStorage.setItem('email', noEmail ? 'No email provided' : email);
+    // Reset error messages
+    document.getElementById('name-error').style.display = 'none';
+    document.getElementById('birthday-error').style.display = 'none';
+    document.getElementById('email-error').style.display = 'none';
 
-        // Redirect to page 3
-        window.location.href = 'page3.html';
-    });
+    let valid = true;
+
+    // Validate name
+    if (!name) {
+        document.getElementById('name-error').style.display = 'block';
+        valid = false;
+    }
+
+    // Validate birthday
+    const isValidDate = (d, m, y) => {
+        const datePattern = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d\d$/; // DD/MM/YYYY format
+        if (!datePattern.test(`${d}/${m}/${y}`)) return false;
+        const date = new Date(`${y}-${m}-${d}`);
+        return date && date.getDate() == d && date.getMonth() + 1 == m && date.getFullYear() == y;
+    };
+
+    if (!day || !month || !year || !isValidDate(day, month, year)) {
+        document.getElementById('birthday-error').style.display = 'block';
+        valid = false;
+    }
+
+    // Validate email if "No email address" is not checked
+    if (!noEmail && (!email || !/\S+@\S+\.\S+/.test(email))) {
+        document.getElementById('email-error').style.display = 'block';
+        valid = false;
+    }
+
+    // If all validations pass, proceed with form submission
+    if (valid) {
+        // Store data in sessionStorage or process the form
+        window.location.href('page3.html');
+    }
+});
 </script>
 </html>
