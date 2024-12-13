@@ -42,8 +42,9 @@ p {
 
 .form-group {
     margin-bottom: 1.5em;
-    display: flex; /* Use flexbox for input and select alignment */
-    align-items: center; /* Align items vertically center */
+    display: flex;
+    align-items: flex-start; /* Align items to the top */
+    flex-direction: column; /* Stack elements vertically */
 }
 
 input[type="tel"],
@@ -60,7 +61,7 @@ input[type="email"] {
 
 select {
     padding: 10px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     appearance: none;
@@ -76,6 +77,8 @@ select {
     border-radius: 4px;
     cursor: pointer;
     font-size: 1em; /* Adjust font size for buttons */
+    width: 100%; 
+    border-radius: 8px;
 }
 
 .powered-by {
@@ -121,3 +124,40 @@ select {
         font-size: 0.9em; /* Smaller font size for inputs and buttons */
     }
 }
+
+.input-container {
+  display: flex;
+  align-items: center;
+  width: 100%; 
+  margin-bottom: 10px; /* Add space between input and button */
+}
+
+.button-container {
+  width: 100%; 
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+    width: 100%; 
+    margin-bottom: 10px; /* Add space between input and button */
+  }
+  
+.button-container {
+    width: 100%; 
+  }
+
+h2 {
+    font-family: "Times New Roman", serif; /* Change font to Times New Roman */
+    font-size: 2.5em; /* Increase font size */
+    text-align: left; /* Align text to the left */
+    margin-bottom: 0.5em; /* Adjust spacing as needed */
+    color : darkslategray;
+  }
+  
+p {
+    font-size: 16px;
+    margin: 10px 0;
+    color: #e86e1c; /* Orange color for the paragraph */
+    text-align: left; /* Align text to the left */
+  }
