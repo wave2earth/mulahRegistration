@@ -16,8 +16,7 @@
                 <option value="+60">+60</option>
                 <option value="+61">+61</option>
                 <option value="+62">+62</option>
-                <!-- Add more options as needed -->
-            </select>
+                </select>
             <input type="tel" id="mobile-number" placeholder="Enter your mobile number">
             <button class="check-button">Check Loyalty Points</button>
         </div>
@@ -28,10 +27,14 @@
         document.querySelector('.check-button').addEventListener('click', function() {
             const mobileInput = document.getElementById('mobile-number').value;
             const countryCode = document.getElementById('country-code').value;
-            const validNumber = countryCode + '173527250'; // Example number for validation
 
-            // Check if the input is a valid number
-            if (mobileInput === validNumber) {
+            // Combine country code and mobile number
+            const fullNumber = countryCode + mobileInput; 
+
+            const validNumber = '+60173527250'; // Example number for validation
+
+            // Check if the combined input matches the valid number
+            if (fullNumber === validNumber) {
                 // Redirect to registration page
                 window.location.href = 'registration.html';
             } else {

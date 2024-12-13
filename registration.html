@@ -12,27 +12,27 @@
         <h2>Registration</h2>
         <p>Please fill up your details.</p>
 
-        <form action="/submit" method="post"> 
+        <form id="registration-form" action="/submit" method="post"> 
             <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" id="name" name="name" placeholder="Enter Name" required>
-                <span class="error">*Please insert a name.</span> 
+                <span class="error" id="name-error">*Please insert a name.</span> 
             </div>
 
             <div class="form-group">
                 <label for="birthday">Birthday</label>
                 <div class="birthday-fields">
-                    <input type="text" id="birthday" name="day" placeholder="DD" required>
-                    <input type="text" id="birthday" name="month" placeholder="MM" required>
-                    <input type="text" id="birthday" name="year" placeholder="YYYY" required>
+                    <input type="text" id="day" name="day" placeholder="DD" required>
+                    <input type="text" id="month" name="month" placeholder="MM" required>
+                    <input type="text" id="year" name="year" placeholder="YYYY" required>
                 </div>
-                <span class="error">*Please insert your birthday.</span> 
+                <span class="error" id="birthday-error">*Please insert your birthday.</span> 
             </div>
 
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" placeholder="Email Address" required>
-                <span class="error">*Please insert a valid email address.</span> 
+                <span class="error" id="email-error">*Please insert a valid email address.</span> 
             </div>
 
             <div class="form-group">
@@ -45,56 +45,58 @@
 
         <p class="powered-by">Powered by MulahRewards.com</p>
     </div>
+
+    <script>
+        document.getElementById('registration-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Get input values
+            const name = document.getElementById('name').value;
+            const day = document.getElementById('day').value;
+            const month = document.getElementById('month').value;
+            const year = document.getElementById('year').value;
+            const email = document.getElementById('email').value;
+            const noEmail = document.getElementById('no-email').checked;
+
+            // Hide error messages initially
+            document.getElementById('name-error').style.display = 'none';
+            document.getElementById('birthday-error').style.display = 'none';
+            document.getElementById('email-error').style.display = 'none';
+
+            let valid = true;
+
+            // Validate name
+            if (!name) {
+                document.getElementById('name-error').style.display = 'block';
+                valid = false;
+            }
+
+            // Validate birthday (using a more robust date validation function)
+            const isValidDate = (d, m, y) => {
+                const datePattern = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d\d$/; // DD/MM/YYYY format
+                if (!datePattern.test(`${d}/${m}/${y}`)) return false;
+                const date = new Date(`${y}-${m}-${d}`);
+                return date && date.getDate() == d && date.getMonth() + 1 == m && date.getFullYear() == y;
+            };
+
+            if (!day || !month || !year || !isValidDate(day, month, year)) {
+                document.getElementById('birthday-error').style.display = 'block';
+                valid = false;
+            }
+
+            // Validate email if "No email address" is not checked
+            if (!noEmail && (!email || !/\S+@\S+\.\S+/.test(email))) {
+                document.getElementById('email-error').style.display = 'block';
+                valid = false;
+            }
+
+            // If all validations pass, proceed with form submission
+            if (valid) {
+                // Store data in sessionStorage or process the form as needed
+                // For now, just redirect to page3.html
+                window.location.href = 'page3.html'; 
+            }
+        });
+    </script>
 </body>
-<script>
-   document.getElementById('registration-form').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent the default form submission
-
-    // Get the input values
-    const name = document.getElementById('name').value;
-    const day = document.getElementById('day').value;
-    const month = document.getElementById('month').value;
-    const year = document.getElementById('year').value;
-    const email = document.getElementById('email').value;
-    const noEmail = document.getElementById('no-email').checked;
-
-    // Reset error messages
-    document.getElementById('name-error').style.display = 'none';
-    document.getElementById('birthday-error').style.display = 'none';
-    document.getElementById('email-error').style.display = 'none';
-
-    let valid = true;
-
-    // Validate name
-    if (!name) {
-        document.getElementById('name-error').style.display = 'block';
-        valid = false;
-    }
-
-    // Validate birthday
-    const isValidDate = (d, m, y) => {
-        const datePattern = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d\d$/; // DD/MM/YYYY format
-        if (!datePattern.test(`${d}/${m}/${y}`)) return false;
-        const date = new Date(`${y}-${m}-${d}`);
-        return date && date.getDate() == d && date.getMonth() + 1 == m && date.getFullYear() == y;
-    };
-
-    if (!day || !month || !year || !isValidDate(day, month, year)) {
-        document.getElementById('birthday-error').style.display = 'block';
-        valid = false;
-    }
-
-    // Validate email if "No email address" is not checked
-    if (!noEmail && (!email || !/\S+@\S+\.\S+/.test(email))) {
-        document.getElementById('email-error').style.display = 'block';
-        valid = false;
-    }
-
-    // If all validations pass, proceed with form submission
-    if (valid) {
-        // Store data in sessionStorage or process the form
-        window.location.href('page3.html');
-    }
-});
-</script>
 </html>
