@@ -11,9 +11,10 @@ body {
 .container {
     background-color: #fff;
     padding: 30px;
-    border-radius: 8px;
+    border-radius: 20px; /* More rounded corners for phone shape */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     text-align: center;
+    max-width: 350px; /* Limit the width for phone shape */
 }
 
 h1 {
@@ -29,6 +30,27 @@ h2 {
 
 .form-group {
     margin-bottom: 1.5em;
+    display: flex; /* Use flexbox for better positioning */
+    align-items: center; /* Align items vertically in the center */
+}
+
+select {
+    padding: 10px;
+    margin-bottom: 15px; 
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    appearance: none;
+    margin-right: 10px; /* Add space between select and input */
+}
+
+input[type="tel"] {
+    width: 100%; 
+    padding: 10px;
+    margin: 5px 0 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; 
+    flex-grow: 1; /* Allow input to take up remaining space */
 }
 
 input[type="tel"],
